@@ -1,0 +1,25 @@
+
+.CartIcon{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ffffffcc url('./basket.png') no-repeat center;
+    position: fixed;
+    top: 70px;
+    right: 25px;
+    z-index: 255;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor:pointer;
+}
+.nav-list{
+    display: flex;
+}
+.item{
+    margin: 0 15px;
+}
+.active{
+    color:#e22b2b;
+}

@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { db } from './components/db/db';
+import { Context } from './components/context/context';
+import { GlobalStyle } from './components/Styled-components/GlobalStyle';
+import { useOrders } from './components/Hooks/useOrders';
+import './components/Styled-components/style.css';
+import Section from './components/Section/Section';
+import Cart from './components/Cart/Cart';
+import Header from './components/Header/Header';
 
 function App() {
+
+  const orders = useOrders();
+
+  useEffect(() => {
+    localStorage.setItem('Orders', JSON.stringify(orders.orders));
+  }, [orders.orders]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Context.Provider value={{ db, orders }}>
+        <GlobalStyle />
+        <Header />
+        <Route exact path='/' render={() => 
+          <> 
+            <Section /> 
+            { orders.orders.length && <Link className='CartIcon' to='/cart' /> }
+          </>} 
+        />
+        <Route exact path='/cart' component={Cart} />
+      </Context.Provider>
+    </BrowserRouter>
   );
 }
 
